@@ -1,5 +1,6 @@
-from flask import Flask, jsonify, redirect
+from flask import Flask, jsonify, redirect, request
 from flask_cors import CORS
+from api import findByCode
 
 # configuration
 DEBUG = True
@@ -15,14 +16,16 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 def home():
     return redirect("http://localhost:3000/", code=302)
 
-@app.route('/ping', methods=['GET'])
-def ping_pong():
-    return jsonify('pong!')
-
 
 @app.route('/search', methods=['POST'])
 def search():
-    return 'Funcionou'
+    code = request.form.get('code')
+    phoneNumber = request.form.get('phoneNumber')
+    notify = request.form.get('sms')
+    searchData = findByCode(code)
+    ultimoStatus, historicoArray = searchData
+    resposta = dict(ultimoStatus=ultimoStatus, historicoArray=historicoArray)
+    return jsonify(resposta)
 
 
 if __name__ == '__main__':

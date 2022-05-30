@@ -11,7 +11,7 @@ const routes = [
     path: '/codigos',
     name: 'Codigos',
     component: Codigos,
-  },
+  }
 ]
 const router = createRouter({
   history: createWebHistory(),

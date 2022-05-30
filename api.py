@@ -12,3 +12,8 @@ def findByCode(code):
     items = [lastStatus]
     for li in listItems:
         items.append(li.get_text())
+    historicoUl = soup.find_all('ul', class_='linha_status')
+    historicoDicionario = []
+    for index, li in enumerate(historicoUl):
+        historicoDicionario.append(li.get_text()[1:].split('\n'))
+    return (items,historicoDicionario)
