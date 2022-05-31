@@ -59,11 +59,31 @@
                 >
                   <div class="px-4 sm:px-6">
                     <DialogTitle class="text-lg font-medium text-gray-900">
-                      Titulo
+                      Status de Rastreio:
+                      {{
+                        newValues.data.ultimoStatus[0].replace(
+                          "Útimo Status do Objeto:",
+                          ""
+                        )
+                      }}
                     </DialogTitle>
+                    <hr>
+                    <p v-if="newValues.data.phoneNumber" class="text-sm font-semibold">Status enviado via SMS para o número <br>+55 {{newValues.data.phoneNumber}}</p>
+                    <hr>
                   </div>
                   <div class="relative mt-6 flex-1 px-4 sm:px-6">
-                    {{ newValues.data }}
+                    <ul>
+                      <li
+                        v-for="status in newValues.data.historicoArray"
+                        :key="status.data"
+                      >
+                        <h2 class="font-bold">{{ status[0].replace("Status:", "") }}</h2>
+                        <p>{{ status[1] }}</p>
+                        <p>{{ status[2] }}</p>
+                        <hr>
+                        <br>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </DialogPanel>

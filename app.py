@@ -24,7 +24,10 @@ def search():
     notify = request.form.get('sms')
     searchData = findByCode(code)
     ultimoStatus, historicoArray = searchData
-    resposta = dict(ultimoStatus=ultimoStatus, historicoArray=historicoArray)
+    if (notify):
+        resposta = dict(ultimoStatus=ultimoStatus, historicoArray=historicoArray, phoneNumber=phoneNumber)
+    else:
+        resposta = dict(ultimoStatus=ultimoStatus, historicoArray=historicoArray)
     return jsonify(resposta)
 
 
