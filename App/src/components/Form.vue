@@ -16,7 +16,11 @@ const verifica = () => {};
           Rastreio dos Correios via SMS com DB
         </h2>
       </div>
-      <form class="mt-8 space-y-6" action="http://localhost:5000/search" method="POST">
+      <form
+        class="mt-8 space-y-6"
+        action="http://localhost:5000/search"
+        method="POST"
+      >
         <input type="hidden" name="remember" value="true" />
         <div class="rounded-md shadow-sm -space-y-px">
           <div>
@@ -29,6 +33,7 @@ const verifica = () => {};
               type="text"
               required=""
               v-mask="'AA#########BR'"
+              v-model="code"
               class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
               placeholder="Insira aqui o código de rastreio dos correios"
             />
@@ -42,6 +47,7 @@ const verifica = () => {};
               name="phoneNumber"
               type="tel"
               v-mask="['(##) ####-####', '(##) #####-####']"
+              v-model="phoneNumber"
               class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
               placeholder="Insira aqui o número do seu celular"
             />
@@ -53,6 +59,7 @@ const verifica = () => {};
             id="sms"
             name="sms"
             type="checkbox"
+            v-model="sms"
             class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
           />
           <label for="sms" class="ml-2 block text-sm text-gray-900">
@@ -63,7 +70,7 @@ const verifica = () => {};
         <div>
           <button
             type="submit"
-            @click="onClickConsultar"
+            @click="handleSubmit"
             class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             <span class="flex items-center pr-1">
@@ -81,12 +88,41 @@ const verifica = () => {};
 </template>
 
 <script>
-export default{
+import axios from "axios";
+import { open, newValues } from "./PainelLateral.vue";
+
+export default {
+  data() {
+    return {
+      msg: "Teste Titulo",
+      code: "",
+      phoneNumber: "",
+      sms: false,
+    };
+  },
   methods: {
-    onClickConsultar(event){
+    handleSubmit(event) {
       event.preventDefault();
-      this.$root.$emit('consulta', true)
-    }
-  }
-}
+      const path = "http://localhost:5000/search";
+      const data = {
+        code: this.code,
+        phoneNumber: this.phoneNumber,
+        sms: this.sms,
+      };
+      const headers = {
+        "Content-Type": "multipart/form-data",
+        "Access-Control-Allow-Origin": "*",
+      };
+      axios
+        .post(path, data, { headers })
+        .then((res) => {
+          newValues.value.setData(res.data);
+          open.value.setOpen(true);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+  },
+};
 </script>

@@ -1,6 +1,6 @@
 <template>
-  <TransitionRoot as="template" :show="open">
-    <Dialog as="div" class="relative z-10" @close="open = false">
+  <TransitionRoot as="template" :show="open.open">
+    <Dialog as="div" class="relative z-10" @close="open.open = false">
       <TransitionChild
         as="template"
         enter="ease-in-out duration-500"
@@ -47,7 +47,7 @@
                     <button
                       type="button"
                       class="rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
-                      @click="open = false"
+                      @click="open.open = false"
                     >
                       <span class="sr-only">Fechar</span>
                       <XIcon class="h-6 w-6" aria-hidden="true" />
@@ -59,11 +59,11 @@
                 >
                   <div class="px-4 sm:px-6">
                     <DialogTitle class="text-lg font-medium text-gray-900">
-                      {{ msg }}
+                      Titulo
                     </DialogTitle>
                   </div>
                   <div class="relative mt-6 flex-1 px-4 sm:px-6">
-                    {{ isOpen ? "teste" : "teste2" }}
+                    {{ newValues.data }}
                   </div>
                 </div>
               </DialogPanel>
@@ -85,7 +85,20 @@ import {
   TransitionRoot,
 } from "@headlessui/vue";
 import { XIcon } from "@heroicons/vue/outline";
+</script>
 
-const props = defineProps({ msg: String });
-const open = ref(false);
+<script>
+export var open = ref({
+  open: false,
+  setOpen(value) {
+    this.open = value;
+  },
+});
+
+export var newValues = ref({
+  data: {},
+  setData(value) {
+    this.data = value;
+  },
+});
 </script>
