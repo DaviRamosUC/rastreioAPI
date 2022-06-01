@@ -41,7 +41,7 @@ def select_rastreio(codigo):
     try:
         conn = sqlite3.connect('database.db')
         cur = conn.cursor()
-        cur.execute('SELECT * FROM rastreio WHERE codigo = ?', (codigo))
+        cur.execute('SELECT * FROM rastreio WHERE codigo = ?', (codigo,))
         return cur.fetchall()
     except sqlite3.DatabaseError as e:
         print(e)
@@ -55,6 +55,18 @@ def selectAll_rastreio():
         cur = conn.cursor()
         cur.execute('SELECT * FROM rastreio')
         return cur.fetchall()
+    except sqlite3.DatabaseError as e:
+        print(e)
+    finally:
+        conn.close()
+
+
+def atualiza_rastreio(codigo, ultimoStatus):
+    try:
+        conn = sqlite3.connect('database.db')
+        cur = conn.cursor()
+        cur.execute('UPDATE rastreio SET ultimoStatus = ? WHERE codigo = ?', (ultimoStatus,codigo))
+        conn.commit()
     except sqlite3.DatabaseError as e:
         print(e)
     finally:

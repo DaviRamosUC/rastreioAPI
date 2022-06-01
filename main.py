@@ -2,6 +2,10 @@ from flask import Flask, jsonify, redirect, request
 from flask_cors import CORS
 from scraping import findByCode
 from db_sqlite3 import *
+from twilio.rest import Client
+import schedule
+import time
+import os
 
 # configuration
 DEBUG = True
@@ -26,14 +30,13 @@ def search():
     notify = request.form.get('sms')
     searchData = findByCode(code)
     ultimoStatus, historicoArray = searchData
+    verifyIfHasStoredCode(code, phoneNumber, ultimoStatus[1])
     if (notify):
         resposta = dict(ultimoStatus=ultimoStatus,
                         historicoArray=historicoArray, phoneNumber=phoneNumber)
-        insere_rastreio(code, phoneNumber, ultimoStatus[1])
     else:
         resposta = dict(ultimoStatus=ultimoStatus,
                         historicoArray=historicoArray)
-        insere_rastreio(code, None, ultimoStatus[0])
     return jsonify(resposta)
 
 
@@ -43,6 +46,32 @@ def storedCodes():
     return jsonify(storedCodes)
 
 
+def verifyIfHasStoredCode(code, phoneNumber, status):
+    rastreios = select_rastreio(code)
+    if len(rastreios) == 0:
+        insere_rastreio(code, phoneNumber, status)
+
+
+def verifyPerTime():
+    rastreios = selectAll_rastreio()
+    for rastreio in rastreios:
+        code, phoneNumber, ultimoStatus = rastreio
+        ultimoStatusPesquisado, historicoArray = findByCode(code)
+        if ultimoStatus == "Status: Objeto entregue ao destinatário":
+            remove_rastreio(code)
+        elif ultimoStatus != ultimoStatusPesquisado[1]:
+            atualiza_rastreio(code, ultimoStatus[1])
+            sendMessage(phoneNumber)
+            
+
+def sendMessage(phoneNumber):
+    print("--- Mensagem enviada para", phoneNumber)
+
+
 if __name__ == '__main__':
     app.run()
     monta_tabelas()
+    schedule.every(1).hours.do(verifyPerTime)
+    while True:
+        schedule.run_pending()
+        time.sleep(1800)
