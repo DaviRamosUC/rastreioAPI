@@ -1,1 +1,0 @@
-API = "https://www.linkcorreios.com.br/?id="

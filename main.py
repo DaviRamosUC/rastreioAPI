@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, redirect, request
 from flask_cors import CORS
-from api import findByCode
+from scraping import findByCode
+from db_sqlite3 import *
 
 # configuration
 DEBUG = True
@@ -11,6 +12,7 @@ app.config.from_object(__name__)
 
 # enable CORS
 CORS(app, resources={r'/*': {'origins': '*'}})
+
 
 @app.route('/', methods=['GET'])
 def home():
@@ -25,11 +27,22 @@ def search():
     searchData = findByCode(code)
     ultimoStatus, historicoArray = searchData
     if (notify):
-        resposta = dict(ultimoStatus=ultimoStatus, historicoArray=historicoArray, phoneNumber=phoneNumber)
+        resposta = dict(ultimoStatus=ultimoStatus,
+                        historicoArray=historicoArray, phoneNumber=phoneNumber)
+        insere_rastreio(code, phoneNumber, ultimoStatus[1])
     else:
-        resposta = dict(ultimoStatus=ultimoStatus, historicoArray=historicoArray)
+        resposta = dict(ultimoStatus=ultimoStatus,
+                        historicoArray=historicoArray)
+        insere_rastreio(code, None, ultimoStatus[0])
     return jsonify(resposta)
+
+
+@app.route('/storedCodes', methods=['GET'])
+def storedCodes():
+    storedCodes = selectAll_rastreio()
+    return jsonify(storedCodes)
 
 
 if __name__ == '__main__':
     app.run()
+    monta_tabelas()

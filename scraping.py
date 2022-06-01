@@ -1,8 +1,7 @@
 from bs4 import BeautifulSoup
-from constants import API
 import requests
 
-
+API = "https://www.linkcorreios.com.br/?id="
 def findByCode(code):
     source = requests.get(API + code).text
     soup = BeautifulSoup(source, 'html.parser')
