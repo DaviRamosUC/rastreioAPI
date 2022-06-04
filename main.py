@@ -1,8 +1,8 @@
 from flask import Flask, jsonify, redirect, request
 from flask_cors import CORS
-from scraping import findByCode
 from db_sqlite3 import *
 from twilio.rest import Client
+from scraping import findByCode
 import schedule
 import time
 import os
