@@ -71,7 +71,7 @@ def sendMessage(phoneNumber):
 if __name__ == '__main__':
     app.run()
     monta_tabelas()
-    schedule.every(1).hours.do(verifyPerTime)
-    while True:
-        schedule.run_pending()
-        time.sleep(1800)
+    # schedule.every(1).hours.do(verifyPerTime)
+    # while True:
+    #     schedule.run_pending()
+    #     time.sleep(1800)

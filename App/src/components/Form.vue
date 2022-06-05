@@ -1,6 +1,7 @@
 <script setup>
 import { SearchIcon } from "@heroicons/vue/solid";
-const verifica = () => {};
+import axios from "axios";
+import { open, newValues } from "./PainelLateral.vue";
 </script>
 
 <template>
@@ -32,7 +33,7 @@ const verifica = () => {};
               name="code"
               type="text"
               required=""
-              v-mask="'AA#########BR'"
+              v-mask="'AA#########AA'"
               v-model="code"
               class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
               placeholder="Insira aqui o código de rastreio dos correios"
@@ -88,13 +89,9 @@ const verifica = () => {};
 </template>
 
 <script>
-import axios from "axios";
-import { open, newValues } from "./PainelLateral.vue";
-
 export default {
   data() {
     return {
-      msg: "Teste Titulo",
       code: "",
       phoneNumber: "",
       sms: false,
