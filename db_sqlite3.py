@@ -31,8 +31,9 @@ def remove_rastreio(codigo):
         cur = conn.cursor()
         cur.execute('DELETE FROM rastreio WHERE codigo=?', (codigo,))
         conn.commit()
+        return 'Código deletado com sucesso!'
     except sqlite3.DatabaseError as e:
-        print(e)
+        return 'Houve um erro inesperado ao remover o código'
     finally:
         conn.close()
 

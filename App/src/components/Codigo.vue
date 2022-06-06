@@ -1,5 +1,6 @@
 <script setup>
 import axios from "axios";
+import { useToast } from "vue-toastification";
 import { open, newValues } from "./PainelLateral.vue";
 
 const props = defineProps(["data"]);
@@ -40,7 +41,7 @@ const props = defineProps(["data"]);
                 </button>
               </th>
               <th>
-                <button @click="excluir" class="btn btn-ghost btn-xs">
+                <button @click="excluir(code)" class="btn btn-ghost btn-xs">
                   Excluir
                 </button>
               </th>
@@ -61,9 +62,9 @@ export default {
   },
   methods: {
     visualizar(obj) {
-      console.log(obj['1']);
+      const toast = useToast();
       const path = "http://localhost:5000/search";
-      var sms = (obj["1"] != null || obj["1"] != '') ? true : false;
+      var sms = obj["1"] != null || obj["1"] != "" ? true : false;
       const data = {
         code: obj["0"],
         phoneNumber: obj["1"],
@@ -82,9 +83,26 @@ export default {
         .catch((error) => {
           console.error(error);
         });
+      toast.success("Aguarde enquando procuramos sua encomenda...", {
+        timeout: 3000,
+      });
     },
-    excluir() {
-      console.log("excluir");
+    
+    excluir(obj) {
+      const toast = useToast();
+      const code = obj["0"];
+      const path = `http://localhost:5000/removeCode/${code}`;
+      axios
+        .delete(path)
+        .then((res) => {
+          toast.success(res.data.message, {
+            timeout: 2000,
+          });
+          setTimeout(() => location.reload(), 2000);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     },
   },
 };

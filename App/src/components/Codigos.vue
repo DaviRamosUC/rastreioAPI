@@ -9,24 +9,20 @@ import PainelLateral from "./PainelLateral.vue";
 export default {
   data() {
     return {
-      codes: null,
+      codes: [],
     };
   },
-  methods: {
-    getCodes() {
-      const url = "http://localhost:5000/storedCodes";
-      axios
-        .get(url)
-        .then((res) => {
-          this.codes = res.data;
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    },
-  },
-  created() {
-    this.getCodes();
+  methods: {},
+  beforeCreate() {
+    const url = "http://localhost:5000/storedCodes";
+    axios
+      .get(url)
+      .then((res) => {
+        this.codes = res.data;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   },
 };
 </script>
@@ -34,9 +30,7 @@ export default {
 <template>
   <div>
     <Header />
-    <div v-if="this.codes">
-      <Unidade :data="this.codes" />
-    </div>
+    <Unidade v-if="codes.length > 0" :data="codes" />
     <PainelLateral />
   </div>
 </template>

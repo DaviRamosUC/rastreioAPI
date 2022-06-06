@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, redirect, request
+from flask import Flask, jsonify, render_template, request
 from flask_cors import CORS
 from db_sqlite3 import *
 from twilio.rest import Client
@@ -11,7 +11,7 @@ import os
 DEBUG = True
 
 # instantiate the app
-app = Flask(__name__)
+app = Flask(__name__, static_folder="./App/dist/assets", template_folder="./App/dist")
 app.config.from_object(__name__)
 
 # enable CORS
@@ -20,7 +20,8 @@ CORS(app, resources={r'/*': {'origins': '*'}})
 
 @app.route('/', methods=['GET'])
 def home():
-    return redirect("http://localhost:3000/", code=302)
+    # return redirect("http://localhost:3000/", code=302)
+    return render_template("index.html")
 
 
 @app.route('/search', methods=['POST'])
@@ -44,6 +45,13 @@ def search():
 def storedCodes():
     storedCodes = selectAll_rastreio()
     return jsonify(storedCodes)
+
+
+@app.route('/removeCode/<code>', methods=['DELETE'])
+def deleteCode(code):
+    response_object = {'status': 'success'}
+    response_object['message'] = remove_rastreio(code)
+    return jsonify(response_object)
 
 
 def verifyIfHasStoredCode(code, phoneNumber, status):

@@ -1,5 +1,6 @@
 <script setup>
 import { SearchIcon } from "@heroicons/vue/solid";
+import { useToast } from "vue-toastification";
 import axios from "axios";
 import { open, newValues } from "./PainelLateral.vue";
 </script>
@@ -61,6 +62,8 @@ import { open, newValues } from "./PainelLateral.vue";
             name="sms"
             type="checkbox"
             v-model="sms"
+            true-value="yes"
+            false-value="no"
             class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
           />
           <label for="sms" class="ml-2 block text-sm text-gray-900">
@@ -90,21 +93,15 @@ import { open, newValues } from "./PainelLateral.vue";
 
 <script>
 export default {
-  data() {
-    return {
-      code: "",
-      phoneNumber: "",
-      sms: false,
-    };
-  },
   methods: {
     handleSubmit(event) {
       event.preventDefault();
       const path = "http://localhost:5000/search";
+      const toast = useToast();
       const data = {
         code: this.code,
         phoneNumber: this.phoneNumber,
-        sms: this.sms,
+        sms: (this.sms == 'yes') ? true : false,
       };
       const headers = {
         "Content-Type": "multipart/form-data",
@@ -119,6 +116,9 @@ export default {
         .catch((error) => {
           console.error(error);
         });
+      toast.success("Aguarde enquando procuramos sua encomenda...", {
+        timeout: 3000,
+      });
     },
   },
 };
