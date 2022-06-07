@@ -7,18 +7,17 @@ import PainelLateral from "./PainelLateral.vue";
 
 <script>
 export default {
-  data() {
+  data(){
     return {
-      codes: [],
-    };
+      resultado: null,
+    }
   },
-  methods: {},
-  beforeCreate() {
+  async beforeCreate() {
     const url = "http://localhost:5000/storedCodes";
-    axios
+    this.resultado = await axios
       .get(url)
       .then((res) => {
-        this.codes = res.data;
+        return res.data;
       })
       .catch((error) => {
         console.error(error);
@@ -28,9 +27,9 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div v-if="resultado != null">
     <Header />
-    <Unidade v-if="codes.length > 0" :data="codes" />
+    <Unidade :data="resultado" />
     <PainelLateral />
   </div>
 </template>
