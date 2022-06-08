@@ -1,11 +1,11 @@
 from flask import Flask, jsonify, render_template, request
 from flask_cors import CORS
 from db_sqlite3 import *
-from twilio.rest import Client
 from scraping import findByCode
 import schedule
 import time
 import os
+from twilio.rest import Client
 
 # configuration
 DEBUG = True
@@ -73,12 +73,23 @@ def verifyPerTime():
             
 
 def sendMessage(phoneNumber):
-    print("--- Mensagem enviada para", phoneNumber)
+    os.environ['TWILIO_ACCOUNT_SID'] = 'AC003bf8c7784b5cdb6c445f08b727b7f9'
+    os.environ['TWILIO_AUTH_TOKEN'] = '42bffa188579b9da4d53f3f92e5dff69'
+    account_sid = os.environ['TWILIO_ACCOUNT_SID']
+    auth_token = os.environ['TWILIO_AUTH_TOKEN']
+    client = Client(account_sid, auth_token)
+
+    message = client.messages.create(
+                              body='ISSO É UM TESTE',
+                              from_='+19706968659',
+                              to='+55'+phoneNumber
+                          )
 
 
 if __name__ == '__main__':
-    app.run()
-    monta_tabelas()
+    sendMessage('21964104892')
+    # app.run()
+    # monta_tabelas()
     # schedule.every(1).hours.do(verifyPerTime)
     # while True:
     #     schedule.run_pending()
