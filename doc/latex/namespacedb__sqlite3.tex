@@ -1,0 +1,78 @@
+\hypertarget{namespacedb__sqlite3}{}\doxysection{db\+\_\+sqlite3 Namespace Reference}
+\label{namespacedb__sqlite3}\index{db\_sqlite3@{db\_sqlite3}}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{namespacedb__sqlite3_ad5d260582980bfba6b7725c7418ce8fc}{monta\+\_\+tabelas}} ()
+\item 
+def \mbox{\hyperlink{namespacedb__sqlite3_a0d026c120e32bd2857fad57c89635b79}{insere\+\_\+rastreio}} (codigo, numero, status)
+\item 
+def \mbox{\hyperlink{namespacedb__sqlite3_a514e3a4fa3c8a084153af791cce63f2f}{remove\+\_\+rastreio}} (codigo)
+\item 
+def \mbox{\hyperlink{namespacedb__sqlite3_ad4456b6cc9d79b65cb4c238270ca2a01}{select\+\_\+rastreio}} (codigo)
+\item 
+def \mbox{\hyperlink{namespacedb__sqlite3_a698bf7fbe4924e32795f5337a6f3b8a2}{select\+All\+\_\+rastreio}} ()
+\item 
+def \mbox{\hyperlink{namespacedb__sqlite3_ad23bad4fa8e0e34a5d50e90a91df74c9}{atualiza\+\_\+rastreio}} (codigo, ultimo\+Status)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespacedb__sqlite3_ad23bad4fa8e0e34a5d50e90a91df74c9}\label{namespacedb__sqlite3_ad23bad4fa8e0e34a5d50e90a91df74c9}} 
+\index{db\_sqlite3@{db\_sqlite3}!atualiza\_rastreio@{atualiza\_rastreio}}
+\index{atualiza\_rastreio@{atualiza\_rastreio}!db\_sqlite3@{db\_sqlite3}}
+\doxysubsubsection{\texorpdfstring{atualiza\_rastreio()}{atualiza\_rastreio()}}
+{\footnotesize\ttfamily def db\+\_\+sqlite3.\+atualiza\+\_\+rastreio (\begin{DoxyParamCaption}\item[{}]{codigo,  }\item[{}]{ultimo\+Status }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Função responsável por atualizar um dado na tabela a partir de um determinado código
+:param codigo: String contendo o código de rastreio informado pelo usuário
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacedb__sqlite3_a0d026c120e32bd2857fad57c89635b79}\label{namespacedb__sqlite3_a0d026c120e32bd2857fad57c89635b79}} 
+\index{db\_sqlite3@{db\_sqlite3}!insere\_rastreio@{insere\_rastreio}}
+\index{insere\_rastreio@{insere\_rastreio}!db\_sqlite3@{db\_sqlite3}}
+\doxysubsubsection{\texorpdfstring{insere\_rastreio()}{insere\_rastreio()}}
+{\footnotesize\ttfamily def db\+\_\+sqlite3.\+insere\+\_\+rastreio (\begin{DoxyParamCaption}\item[{}]{codigo,  }\item[{}]{numero,  }\item[{}]{status }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Função responsável por inserir os dados na tabela
+:param codigo: String contendo o código de rastreio informado pelo usuário
+:param numero: String contendo o número de proprietário
+:param status: String contendo o último status do rastreio
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacedb__sqlite3_ad5d260582980bfba6b7725c7418ce8fc}\label{namespacedb__sqlite3_ad5d260582980bfba6b7725c7418ce8fc}} 
+\index{db\_sqlite3@{db\_sqlite3}!monta\_tabelas@{monta\_tabelas}}
+\index{monta\_tabelas@{monta\_tabelas}!db\_sqlite3@{db\_sqlite3}}
+\doxysubsubsection{\texorpdfstring{monta\_tabelas()}{monta\_tabelas()}}
+{\footnotesize\ttfamily def db\+\_\+sqlite3.\+monta\+\_\+tabelas (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Função responsável por montar tabela de persistência dos dados do rastreio
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacedb__sqlite3_a514e3a4fa3c8a084153af791cce63f2f}\label{namespacedb__sqlite3_a514e3a4fa3c8a084153af791cce63f2f}} 
+\index{db\_sqlite3@{db\_sqlite3}!remove\_rastreio@{remove\_rastreio}}
+\index{remove\_rastreio@{remove\_rastreio}!db\_sqlite3@{db\_sqlite3}}
+\doxysubsubsection{\texorpdfstring{remove\_rastreio()}{remove\_rastreio()}}
+{\footnotesize\ttfamily def db\+\_\+sqlite3.\+remove\+\_\+rastreio (\begin{DoxyParamCaption}\item[{}]{codigo }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Função responsável por remover um rastreio da tabela por um código
+:param codigo: String contendo o código de rastreio informado pelo usuário
+:return String
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacedb__sqlite3_ad4456b6cc9d79b65cb4c238270ca2a01}\label{namespacedb__sqlite3_ad4456b6cc9d79b65cb4c238270ca2a01}} 
+\index{db\_sqlite3@{db\_sqlite3}!select\_rastreio@{select\_rastreio}}
+\index{select\_rastreio@{select\_rastreio}!db\_sqlite3@{db\_sqlite3}}
+\doxysubsubsection{\texorpdfstring{select\_rastreio()}{select\_rastreio()}}
+{\footnotesize\ttfamily def db\+\_\+sqlite3.\+select\+\_\+rastreio (\begin{DoxyParamCaption}\item[{}]{codigo }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Função responsável por pesquisar um dado na tabela
+:param codigo: String contendo o código de rastreio informado pelo usuário
+:return Tuple
+\end{DoxyVerb}
+ \mbox{\Hypertarget{namespacedb__sqlite3_a698bf7fbe4924e32795f5337a6f3b8a2}\label{namespacedb__sqlite3_a698bf7fbe4924e32795f5337a6f3b8a2}} 
+\index{db\_sqlite3@{db\_sqlite3}!selectAll\_rastreio@{selectAll\_rastreio}}
+\index{selectAll\_rastreio@{selectAll\_rastreio}!db\_sqlite3@{db\_sqlite3}}
+\doxysubsubsection{\texorpdfstring{selectAll\_rastreio()}{selectAll\_rastreio()}}
+{\footnotesize\ttfamily def db\+\_\+sqlite3.\+select\+All\+\_\+rastreio (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Função responsável por buscar todos os dados na tabela
+:return Tuple
+\end{DoxyVerb}
+ 
